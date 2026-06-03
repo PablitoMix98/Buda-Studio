@@ -6,9 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Buda Studio — Lujo Espiritual Contemporáneo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Manrope:wght@200;300;400;500&display=swap"
-    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400&family=Great+Vibes&family=Cinzel&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     :root {
@@ -44,7 +43,7 @@
     body {
       background: var(--bg-deep);
       color: var(--text-primary);
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
       overflow-x: hidden;
       cursor: none;
@@ -436,11 +435,17 @@
     }
 
     .hero-title em {
-      font-style: italic;
+      font-style: normal;
       color: var(--gold-logo);
     }
 
-    .hero-subtitle {
+    
+    @media (max-width: 600px) {
+      .hero-title {
+        line-height: 1.35;
+      }
+    }
+.hero-subtitle {
       font-size: 0.85rem;
       font-weight: 300;
       letter-spacing: 0.15em;
@@ -462,7 +467,7 @@
       border: 1px solid rgba(210, 157, 15, 0.35);
       background: rgba(210, 157, 15, 0.04);
       color: var(--gold-light);
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 0.7rem;
       font-weight: 400;
       letter-spacing: 0.3em;
@@ -594,7 +599,7 @@
     }
 
     .section-title em {
-      font-style: italic;
+      font-style: normal;
       color: var(--gold-light);
     }
 
@@ -682,7 +687,7 @@
     .philosophy-quote {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.1rem;
-      font-style: italic;
+      font-style: normal;
       font-weight: 300;
       line-height: 1.9;
       color: var(--text-secondary);
@@ -1243,7 +1248,7 @@
     }
 
     .ritual-title em {
-      font-style: italic;
+      font-style: normal;
       color: var(--gold-light);
     }
 
@@ -1315,7 +1320,7 @@
     .testimonial-text {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.05rem;
-      font-style: italic;
+      font-style: normal;
       font-weight: 300;
       line-height: 1.8;
       color: var(--text-secondary);
@@ -1504,7 +1509,7 @@
     .footer-tagline-bottom {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.8rem;
-      font-style: italic;
+      font-style: normal;
       color: rgba(210, 157, 15, 0.4);
     }
 
@@ -1989,6 +1994,61 @@
       .contact-container {
         padding: 32px 20px !important;
       }
+    }
+    /* -----------------------------------------------
+       TYPOGRAPHY SYSTEM � 3 FUENTES
+       ----------------------------------------------- */
+
+    /* 1. ETIQUETAS EYEBROW ? Cinzel */
+    .section-eyebrow,
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif !important;
+      font-size: 11px !important;
+      letter-spacing: 4px !important;
+      text-transform: uppercase !important;
+      font-weight: 400 !important;
+    }
+
+    /* 2. T�TULOS ? Cormorant Garamond 300 */
+    h1, h2, h3, h4,
+    .hero-title,
+    .section-title,
+    .service-name,
+    .product-name,
+    .ritual-title,
+    .philosophy-quote,
+    .testimonial-text,
+    .footer-tagline-bottom,
+    .footer-col h4,
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif !important;
+      font-weight: 300 !important;
+      color: #ffffff !important;
+    }
+
+    /* 3. PARTES DESTACADAS EN T�TULOS ? Great Vibes */
+    .hero-title em,
+    .section-title em,
+    .ritual-title em {
+      font-family: 'Great Vibes', cursive !important;
+      font-weight: 400 !important;
+      font-style: normal !important;
+      color: #d4af37 !important;
+      font-size: 1.15em !important;
+    }
+
+    /* 4. TEXTO CORRIDO ? Cormorant Garamond 300 */
+    p,
+    .section-desc,
+    .hero-subtitle,
+    .footer-tagline,
+    .service-desc,
+    .ritual-sub,
+    .philosophy-text p {
+      font-family: 'Cormorant Garamond', serif !important;
+      font-weight: 300 !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      line-height: 1.8 !important;
     }
   </style>
 </head>
@@ -2826,7 +2886,7 @@
         </div>
 
         <div class="contact-map">
-          <!-- Google Maps Iframe Placeholder -->
+          
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3700.4897340122598!2d-102.3406294240388!3d21.95415957993698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429e5ffd4240f29%3A0x82a37307aebf813a!2sTienda%20esot%C3%A9rica%20el%20buda!5e0!3m2!1ses-419!2smx!4v1778712287708!5m2!1ses-419!2smx"
             width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
