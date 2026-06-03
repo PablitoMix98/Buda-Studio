@@ -136,7 +136,7 @@
     }
 
     nav.scrolled {
-      padding: 18px 60px;
+      padding: 12px 60px;
       background: rgba(11, 9, 16, 0.85);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(210, 157, 15, 0.08);
@@ -156,6 +156,11 @@
       width: auto;
       display: block;
       object-fit: contain;
+      transition: height 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    nav.scrolled .nav-logo img {
+      height: 42px;
     }
 
     .nav-logo-footer img {
@@ -169,6 +174,11 @@
       display: flex;
       gap: 40px;
       list-style: none;
+      transition: gap 0.5s ease;
+    }
+
+    nav.scrolled .nav-links {
+      gap: 28px;
     }
 
     .nav-links a {
@@ -177,8 +187,13 @@
       text-transform: uppercase;
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.3s;
+      transition: color 0.3s, font-size 0.5s ease, letter-spacing 0.5s ease;
       position: relative;
+    }
+
+    nav.scrolled .nav-links a {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
     }
 
     .nav-links a::after {
