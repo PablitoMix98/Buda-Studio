@@ -1202,13 +1202,46 @@
       box-shadow: 0 0 15px rgba(210, 157, 15, 0.5);
       transform: scale(1.1) !important;
     }
+    
+    
+    
 
     /* ─── RITUAL BANNER ─── */
+
+    
     #ritual-banner {
       padding: 160px 60px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #ritual-banner .ritual-title,
+    #ritual-banner .ritual-sub,
+    #ritual-banner .ritual-cta {
+      text-align: center;
+      width: 100%;
+    }
+
+    #ritual-banner .ritual-cta {
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      #ritual-banner {
+        padding: 120px 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #ritual-banner {
+        padding: 100px 24px;
+      }
     }
 
     .ritual-banner-bg {
@@ -1995,11 +2028,471 @@
         padding: 32px 20px !important;
       }
     }
+    /* ─── TESTIMONIALS CAROUSEL (3D DECK) ─── */
+    .testimonials-carousel-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin: 40px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px 0;
+      perspective: 1000px;
+    }
+
+    .tarot-deck {
+      position: relative;
+      width: 320px;
+      height: 500px;
+      transform-style: preserve-3d;
+      margin: 0 auto;
+    }
+
+    .tarot-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(22, 17, 31, 0.96);
+      border: 1px solid rgba(210, 157, 15, 0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(210, 157, 15, 0.02);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: transform 0.95s cubic-bezier(0.34, 1.28, 0.64, 1),
+                  opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.85s ease,
+                  border-color 0.85s ease;
+      transform-origin: center center;
+      cursor: none;
+      z-index: 1;
+      will-change: transform, opacity;
+    }
+
+    .card-frame {
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(210, 157, 15, 0.15);
+      border-radius: 10px;
+      pointer-events: none;
+      transition: border-color 0.5s ease;
+      z-index: 4;
+    }
+
+    .tarot-card:hover .card-frame {
+      border-color: rgba(210, 157, 15, 0.4);
+    }
+
+    /* ─── CARD IMAGE ─── */
+    .card-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 55%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
+      opacity: 0.75;
+      display: block;
+    }
+
+    .tarot-card.active .card-image img {
+      opacity: 0.88;
+      transform: scale(1.03);
+    }
+
+    .card-image-overlay {
+      position: absolute;
+      inset: 0;
+      /* Gradient: transparent top fading to deep background at bottom so content is readable */
+      background: linear-gradient(
+        to bottom,
+        rgba(11, 9, 16, 0.05) 0%,
+        rgba(11, 9, 16, 0.25) 40%,
+        rgba(22, 17, 31, 0.96) 100%
+      );
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 3;
+      padding: 20px 30px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      /* Content takes up the bottom 55% of the card */
+      flex-shrink: 0;
+    }
+
+    /* Fade in content smoothly when card becomes active */
+    .tarot-card.active .card-content {
+      animation: cardContentReveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+    }
+
+    @keyframes cardContentReveal {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-top-accent {
+      font-size: 1.1rem;
+      color: rgba(210, 157, 15, 0.4);
+      margin-bottom: 5px;
+    }
+
+    .card-accent-star {
+      display: inline-block;
+      animation: sepStarSpin 15s linear infinite;
+    }
+
+    .testimonial-title {
+      font-family: 'Cinzel', serif !important;
+      font-size: 1.35rem !important;
+      letter-spacing: 2px !important;
+      color: var(--gold-light) !important;
+      margin: 15px 0 5px;
+      line-height: 1.3;
+      font-weight: 400 !important;
+    }
+
+    .card-footer-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 15px;
+      font-family: 'Cinzel', serif !important;
+    }
+
+    /* 3D Card States */
+    .tarot-card.active {
+      transform: translate3d(0, 0, 0) scale(1.03);
+      opacity: 1;
+      filter: none;
+      z-index: 10;
+      pointer-events: auto;
+      border-color: rgba(210, 157, 15, 0.4);
+      box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65), 
+                  0 0 45px rgba(210, 157, 15, 0.18),
+                  inset 0 0 30px rgba(210, 157, 15, 0.05),
+                  0 -1px 0 rgba(210, 157, 15, 0.35);
+      animation: tarotFloat 6s ease-in-out infinite alternate;
+    }
+
+    .tarot-card.prev {
+      transform: translate3d(-60%, 0, -80px) scale(0.85) rotateY(12deg);
+      opacity: 0.55;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .tarot-card.next {
+      transform: translate3d(60%, 0, -80px) scale(0.85) rotateY(-12deg);
+      opacity: 0.55;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .tarot-card.hidden {
+      transform: translate3d(0, 0, -150px) scale(0.7);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Floating bobbing effect for the active card */
+    @keyframes tarotFloat {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1.03) translateY(0);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scale(1.03) translateY(-10px);
+      }
+    }
+
+    /* Card ambient aura glow */
+    .card-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(circle at 50% 50%, rgba(210, 157, 15, 0.08) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .tarot-card.active:hover .card-glow {
+      opacity: 1;
+    }
+
+    /* Buttons navigation */
+    .tarot-nav-btn {
+      background: none;
+      border: 1px solid rgba(210, 157, 15, 0.25);
+      color: var(--gold-light);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+      transition: all 0.4s ease;
+      z-index: 15;
+      background: rgba(11, 9, 16, 0.5);
+      backdrop-filter: blur(8px);
+    }
+
+    .tarot-nav-btn svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .tarot-nav-btn:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+      box-shadow: 0 0 15px rgba(210, 157, 15, 0.25);
+      background: rgba(210, 157, 15, 0.06);
+    }
+
+    .prev-btn:hover svg {
+      transform: translateX(-2px);
+    }
+
+    .next-btn:hover svg {
+      transform: translateX(2px);
+    }
+
+    /* ─── CUSTOM AUDIO PLAYER ─── */
+    .custom-audio-player {
+      width: 100%;
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .player-controls {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .audio-play-btn {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(22, 17, 31, 0.8);
+      border: 1px solid rgba(210, 157, 15, 0.3);
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: 3;
+    }
+
+    .audio-play-btn:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+      transform: scale(1.06);
+      box-shadow: 0 0 20px rgba(210, 157, 15, 0.3);
+    }
+
+    .audio-play-btn .btn-state svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .play-state svg {
+      transform: translateX(1.5px);
+    }
+
+    .audio-spinner {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 56px;
+      height: 56px;
+      transform: rotate(-90deg);
+      pointer-events: none;
+    }
+
+    .spinner-bg {
+      stroke: rgba(210, 157, 15, 0.08);
+    }
+
+    .spinner-bar {
+      transition: stroke-dashoffset 0.1s linear;
+      stroke-linecap: round;
+    }
+
+    /* Timeline style */
+    .timeline-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timeline-slider {
+      width: 100%;
+      height: 6px;
+      position: relative;
+      cursor: none;
+      padding: 10px 0;
+    }
+
+    .timeline-rail {
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1px;
+    }
+
+    .timeline-fill {
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+      border-radius: 1px;
+      transition: width 0.1s linear;
+    }
+
+    .timeline-slider:hover .timeline-rail {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .timeline-slider:hover .timeline-fill {
+      height: 4px;
+      top: 11px;
+    }
+
+    .time-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif !important;
+    }
+
+    .time-divider {
+      opacity: 0.5;
+    }
+
+    /* Sparkles floating effect inside card content */
+    .card-sparkles-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card-float-sparkle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--color);
+      opacity: 0;
+      animation: sparkleFloat var(--duration) ease-in-out infinite;
+    }
+
+    @keyframes sparkleFloat {
+      0% {
+        transform: translateY(110%) scale(0);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-10%) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive adjustments for 3D Carousel inside query */
+    @media (max-width: 768px) {
+      .tarot-deck {
+        width: 280px;
+        height: 460px;
+      }
+      .tarot-card.prev {
+        transform: translate3d(-55%, 0, -60px) scale(0.86) rotateY(10deg);
+        opacity: 0.45;
+      }
+      .tarot-card.next {
+        transform: translate3d(55%, 0, -60px) scale(0.86) rotateY(-10deg);
+        opacity: 0.45;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .testimonials-carousel-wrapper {
+        gap: 10px;
+      }
+      .tarot-deck {
+        width: 240px;
+        height: 420px;
+      }
+      .testimonial-title {
+        font-size: 1.15rem !important;
+        margin: 10px 0 5px;
+      }
+      .tarot-nav-btn {
+        width: 38px;
+        height: 38px;
+      }
+      .tarot-card.prev {
+        transform: translate3d(-45%, 0, -50px) scale(0.82) rotateY(8deg);
+        opacity: 0.35;
+      }
+      .tarot-card.next {
+        transform: translate3d(45%, 0, -50px) scale(0.82) rotateY(-8deg);
+        opacity: 0.35;
+      }
+    }
+
     /* -----------------------------------------------
-       TYPOGRAPHY SYSTEM � 3 FUENTES
+       TYPOGRAPHY SYSTEM – 3 FUENTES
        ----------------------------------------------- */
 
-    /* 1. ETIQUETAS EYEBROW ? Cinzel */
+    /* 1. ETIQUETAS EYEBROW – Cinzel */
     .section-eyebrow,
     .hero-eyebrow {
       font-family: 'Cinzel', serif !important;
@@ -2758,31 +3251,249 @@
         <h2 class="section-title reveal reveal-delay-1">Lo que dicen las <em>almas</em></h2>
       </div>
 
-      <div class="testimonials-grid">
-        <div class="testimonial-card reveal reveal-delay-1">
-          <div class="testimonial-stars">
-            <span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span
-              class="star">✦</span><span class="star">✦</span>
+      <div class="testimonials-carousel-wrapper reveal reveal-delay-2">
+        <button class="tarot-nav-btn prev-btn" id="tarotPrevBtn" aria-label="Carta anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="tarot-deck" id="tarotDeck">
+          <!-- Carta 1 -->
+          <div class="tarot-card active" data-index="0">
+            <div class="card-glow"></div>
+            <div class="card-frame"></div>
+            <div class="card-image">
+              <img src="./assets/señor_caminar.png" alt="Regreso de pareja">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <div class="card-top-accent">
+                <span class="card-accent-star">✦</span>
+              </div>
+              <div class="testimonial-stars">
+                <span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>
+              </div>
+              <h3 class="testimonial-title">El Milagro de Caminar</h3>
+              
+              <!-- Custom Audio Player -->
+              <div class="custom-audio-player">
+                <audio src="./assets/audio/testimonio1.mp3" preload="none"></audio>
+                <div class="player-controls">
+                  <button class="audio-play-btn" aria-label="Reproducir testimonio">
+                    <div class="btn-state play-state">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <div class="btn-state pause-state" style="display: none;">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                      </svg>
+                    </div>
+                    <svg class="audio-spinner" viewBox="0 0 50 50">
+                      <circle class="spinner-bg" cx="25" cy="25" r="22" fill="none" stroke="rgba(210, 157, 15, 0.1)" stroke-width="2.5"></circle>
+                      <circle class="spinner-bar" cx="25" cy="25" r="22" fill="none" stroke="var(--gold-primary)" stroke-width="2.5" stroke-dasharray="138" stroke-dashoffset="138"></circle>
+                    </svg>
+                  </button>
+                  
+                  <div class="timeline-container">
+                    <div class="timeline-slider">
+                      <div class="timeline-rail"></div>
+                      <div class="timeline-fill"></div>
+                    </div>
+                    <div class="time-display">
+                      <span class="current-time">0:00</span>
+                      <span class="time-divider">/</span>
+                      <span class="duration-time">0:00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <span class="card-footer-tag">Testimonio Anónimo</span>
+            </div>
+            <div class="card-sparkles-container"></div>
           </div>
-          <p class="testimonial-text">"Testimonio 1"</p>
-          <span class="testimonial-author">— Persona 1</span>
-        </div>
-        <div class="testimonial-card reveal reveal-delay-2">
-          <div class="testimonial-stars">
-            <span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span
-              class="star">✦</span><span class="star">✦</span>
+
+          <!-- Carta 2 -->
+          <div class="tarot-card next" data-index="1">
+            <div class="card-glow"></div>
+            <div class="card-frame"></div>
+            <div class="card-image">
+              <img src="./assets/dolores.png" alt="Protección espiritual">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <div class="card-top-accent">
+                <span class="card-accent-star">✦</span>
+              </div>
+              <div class="testimonial-stars">
+                <span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>
+              </div>
+              <h3 class="testimonial-title">Sanación del Cuerpo y el Alma</h3>
+              
+              <!-- Custom Audio Player -->
+              <div class="custom-audio-player">
+                <audio src="./assets/audio/testimonio2.mp3" preload="none"></audio>
+                <div class="player-controls">
+                  <button class="audio-play-btn" aria-label="Reproducir testimonio">
+                    <div class="btn-state play-state">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <div class="btn-state pause-state" style="display: none;">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                      </svg>
+                    </div>
+                    <svg class="audio-spinner" viewBox="0 0 50 50">
+                      <circle class="spinner-bg" cx="25" cy="25" r="22" fill="none" stroke="rgba(210, 157, 15, 0.1)" stroke-width="2.5"></circle>
+                      <circle class="spinner-bar" cx="25" cy="25" r="22" fill="none" stroke="var(--gold-primary)" stroke-width="2.5" stroke-dasharray="138" stroke-dashoffset="138"></circle>
+                    </svg>
+                  </button>
+                  
+                  <div class="timeline-container">
+                    <div class="timeline-slider">
+                      <div class="timeline-rail"></div>
+                      <div class="timeline-fill"></div>
+                    </div>
+                    <div class="time-display">
+                      <span class="current-time">0:00</span>
+                      <span class="time-divider">/</span>
+                      <span class="duration-time">0:00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <span class="card-footer-tag">Testimonio Anónimo</span>
+            </div>
+            <div class="card-sparkles-container"></div>
           </div>
-          <p class="testimonial-text">"Testimonio 2"</p>
-          <span class="testimonial-author">— Persona 2</span>
-        </div>
-        <div class="testimonial-card reveal reveal-delay-3">
-          <div class="testimonial-stars">
-            <span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span
-              class="star">✦</span><span class="star">✦</span>
+
+          <!-- Carta 3 -->
+          <div class="tarot-card hidden" data-index="2">
+            <div class="card-glow"></div>
+            <div class="card-frame"></div>
+            <div class="card-image">
+              <img src="./assets/curacion_espiritual.png" alt="Apertura de caminos">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <div class="card-top-accent">
+                <span class="card-accent-star">✦</span>
+              </div>
+              <div class="testimonial-stars">
+                <span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>
+              </div>
+              <h3 class="testimonial-title">El Fin de las Ataduras</h3>
+              
+              <!-- Custom Audio Player -->
+              <div class="custom-audio-player">
+                <audio src="./assets/audio/testimonio3.mp3" preload="none"></audio>
+                <div class="player-controls">
+                  <button class="audio-play-btn" aria-label="Reproducir testimonio">
+                    <div class="btn-state play-state">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <div class="btn-state pause-state" style="display: none;">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                      </svg>
+                    </div>
+                    <svg class="audio-spinner" viewBox="0 0 50 50">
+                      <circle class="spinner-bg" cx="25" cy="25" r="22" fill="none" stroke="rgba(210, 157, 15, 0.1)" stroke-width="2.5"></circle>
+                      <circle class="spinner-bar" cx="25" cy="25" r="22" fill="none" stroke="var(--gold-primary)" stroke-width="2.5" stroke-dasharray="138" stroke-dashoffset="138"></circle>
+                    </svg>
+                  </button>
+                  
+                  <div class="timeline-container">
+                    <div class="timeline-slider">
+                      <div class="timeline-rail"></div>
+                      <div class="timeline-fill"></div>
+                    </div>
+                    <div class="time-display">
+                      <span class="current-time">0:00</span>
+                      <span class="time-divider">/</span>
+                      <span class="duration-time">0:00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <span class="card-footer-tag">Testimonio Anónimo</span>
+            </div>
+            <div class="card-sparkles-container"></div>
           </div>
-          <p class="testimonial-text">"Testimonio 3"</p>
-          <span class="testimonial-author">— Persona 3</span>
+
+          <!-- Carta 4 -->
+          <div class="tarot-card prev" data-index="3">
+            <div class="card-glow"></div>
+            <div class="card-frame"></div>
+            <div class="card-image">
+              <img src="./assets/malos_pasos.png" alt="Limpieza energética">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <div class="card-top-accent">
+                <span class="card-accent-star">✦</span>
+              </div>
+              <div class="testimonial-stars">
+                <span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>
+              </div>
+              <h3 class="testimonial-title">De la Oscuridad a la Luz</h3>
+              
+              <!-- Custom Audio Player -->
+              <div class="custom-audio-player">
+                <audio src="./assets/audio/testimonio4.mp3" preload="none"></audio>
+                <div class="player-controls">
+                  <button class="audio-play-btn" aria-label="Reproducir testimonio">
+                    <div class="btn-state play-state">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <div class="btn-state pause-state" style="display: none;">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                      </svg>
+                    </div>
+                    <svg class="audio-spinner" viewBox="0 0 50 50">
+                      <circle class="spinner-bg" cx="25" cy="25" r="22" fill="none" stroke="rgba(210, 157, 15, 0.1)" stroke-width="2.5"></circle>
+                      <circle class="spinner-bar" cx="25" cy="25" r="22" fill="none" stroke="var(--gold-primary)" stroke-width="2.5" stroke-dasharray="138" stroke-dashoffset="138"></circle>
+                    </svg>
+                  </button>
+                  
+                  <div class="timeline-container">
+                    <div class="timeline-slider">
+                      <div class="timeline-rail"></div>
+                      <div class="timeline-fill"></div>
+                    </div>
+                    <div class="time-display">
+                      <span class="current-time">0:00</span>
+                      <span class="time-divider">/</span>
+                      <span class="duration-time">0:00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <span class="card-footer-tag">Testimonio Anónimo</span>
+            </div>
+            <div class="card-sparkles-container"></div>
+          </div>
+
         </div>
+
+        <button class="tarot-nav-btn next-btn" id="tarotNextBtn" aria-label="Carta siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -2823,7 +3534,7 @@
         Espacios limitados cada mes.
       </p>
       <div class="ritual-cta reveal reveal-delay-2">
-        <a href="#contact" class="btn-primary">
+        <a href="https://wa.me/524491142428?text=Hola%20Buda%20Studio,%0A%0AEstoy%20listo(a)%20para%20dar%20el%20siguiente%20paso%20en%20mi%20camino.%0A%0AMe%20gustar%C3%ADa%20reservar%20una%20sesi%C3%B3n%20privada%20y%20recibir%20informaci%C3%B3n%20sobre%20los%20rituales%20disponibles.%0A%0AQuedo%20atento(a)%20a%20las%20fechas%20y%20detalles.%20Gracias." class="btn-primary">
           Reservar sesión
           <span class="btn-arrow"></span>
         </a>
@@ -2879,7 +3590,7 @@
               Domingo: Cerrado</span>
           </p>
           <br>
-          <a href="https://wa.me/524492710831" target="_blank" class="btn-primary" style="padding: 12px 24px;">
+          <a href="https://wa.me/524491142428?text=Hola%20Buda%20Studio,%0A%0AVi%20su%20sitio%20web%20y%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios%20y%20rituales.%0A%0A%C2%BFPodr%C3%ADan%20orientarme%20y%20compartirme%20m%C3%A1s%20detalles%3F%0A%0AGracias." target="_blank" class="btn-primary" style="padding: 12px 24px;">
             Enviar Mensaje
             <span class="btn-arrow"></span>
           </a>
@@ -2908,13 +3619,16 @@
               consciencia
               elevada.</p>
             <div class="footer-social">
-              <a href="https://wa.me/524492710831" class="social-link" target="_blank" aria-label="WhatsApp">
+              <a href="https://wa.me/524491142428" class="social-link" target="_blank" aria-label="WhatsApp">
                 <i class="fab fa-whatsapp" style="font-size: 1.15rem;"></i>
               </a>
 
-              <a href="https://facebook.com" class="social-link" target="_blank" aria-label="Facebook">
+              <a href="https://www.facebook.com/share/18jLrGvYUk/" class="social-link" target="_blank" aria-label="Facebook">
                 <i class="fab fa-facebook-f"></i>
               </a>
+                <a href="https://www.instagram.com/andrearoy169?igsh=OHBhNWdna296dmNz" class="social-link" target="_blank" aria-label="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
 
               <a href="tel:+524491142428" class="social-link" aria-label="Teléfono">
                 <i class="fas fa-phone"></i>
@@ -2944,10 +3658,11 @@
           <div class="footer-col">
             <h4>Contacto</h4>
             <ul>
-              <li><a href="#">info@budastudio.mx</a></li>
-              <li><a href="#">Aguascalientes, México</a></li>
-              <li><a href="#">WhatsApp</a></li>
-              <li><a href="#">Instagram</a></li>
+              <li><a href="https://maps.app.goo.gl/ubkygzo6sBxrnerP6" target="_blank">Aguascalientes, México</a></li>
+              <li><a href="mailto:contacto@budastudio.com?subject=Consulta%20Buda%20Studio" target="_blank">Correo</a></li>
+              <li><a href="https://wa.me/524491142428" target="_blank">WhatsApp</a></li>
+              <li><a href="https://www.instagram.com/andrearoy169?igsh=OHBhNWdna296dmNz" target="_blank">Instagram</a></li>
+              <li><a href="https://www.facebook.com/share/18jLrGvYUk/" target="_blank">Facebook</a></li>
             </ul>
           </div>
         </div>
@@ -3258,6 +3973,411 @@
           heroContent.style.opacity = Math.max(0, 1 - y / 500);
         }
       });
+
+      // ─── PRE-CARGA DE IMÁGENES DE TESTIMONIOS ───
+      const TESTIMONIAL_IMAGES = [
+        './assets/señor_caminar.png',
+        './assets/dolores.png',
+        './assets/curacion_espiritual.png',
+        './assets/malos_pasos.png'
+      ];
+      TESTIMONIAL_IMAGES.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+
+      // ─── TESTIMONIALS 3D CAROUSEL LOGIC ───
+      let activeCardIndex = 0;
+      const tarotDeck = document.getElementById('tarotDeck');
+      const tarotCards = document.querySelectorAll('.tarot-card');
+      const totalCards = tarotCards.length;
+      const prevBtn = document.getElementById('tarotPrevBtn');
+      const nextBtn = document.getElementById('tarotNextBtn');
+
+      function updateCarousel() {
+        // Pause any active audio playbacks when we transition
+        pauseAllAudio();
+
+        tarotCards.forEach((card, index) => {
+          card.classList.remove('active', 'prev', 'next', 'hidden');
+
+          let prevIndex = (activeCardIndex - 1 + totalCards) % totalCards;
+          let nextIndex = (activeCardIndex + 1) % totalCards;
+
+          if (index === activeCardIndex) {
+            card.classList.add('active');
+          } else if (index === prevIndex) {
+            card.classList.add('prev');
+          } else if (index === nextIndex) {
+            card.classList.add('next');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      }
+
+      if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+          activeCardIndex = (activeCardIndex - 1 + totalCards) % totalCards;
+          updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', () => {
+          activeCardIndex = (activeCardIndex + 1) % totalCards;
+          updateCarousel();
+        });
+      }
+
+      // Add direct click on side cards to rotate them to center
+      tarotCards.forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+          // If user clicked play button or timeline, do not switch card
+          if (e.target.closest('.audio-play-btn') || e.target.closest('.timeline-slider')) {
+            return;
+          }
+
+          if (card.classList.contains('prev')) {
+            activeCardIndex = (activeCardIndex - 1 + totalCards) % totalCards;
+            updateCarousel();
+          } else if (card.classList.contains('next')) {
+            activeCardIndex = (activeCardIndex + 1) % totalCards;
+            updateCarousel();
+          }
+        });
+      });
+
+      // Swipe Gestures for Mobile
+      if (tarotDeck) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        tarotDeck.addEventListener('touchstart', e => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        tarotDeck.addEventListener('touchend', e => {
+          touchEndX = e.changedTouches[0].screenX;
+          const threshold = 55;
+          if (touchStartX - touchEndX > threshold) {
+            // Swipe Left -> Next
+            activeCardIndex = (activeCardIndex + 1) % totalCards;
+            updateCarousel();
+          } else if (touchEndX - touchStartX > threshold) {
+            // Swipe Right -> Prev
+            activeCardIndex = (activeCardIndex - 1 + totalCards) % totalCards;
+            updateCarousel();
+          }
+        }, { passive: true });
+      }
+
+      // Floating particles inside cards
+      function createCardSparkles() {
+        const containers = document.querySelectorAll('.card-sparkles-container');
+        const colors = [
+          'rgba(210, 157, 15, 0.35)', 
+          'rgba(243, 194, 70, 0.25)', 
+          'rgba(143, 122, 168, 0.25)', 
+          'rgba(245, 239, 231, 0.15)'
+        ];
+
+        containers.forEach(container => {
+          const numSparkles = 8;
+          for (let i = 0; i < numSparkles; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'card-float-sparkle';
+            const size = Math.random() * 2.5 + 1.2;
+            const delay = Math.random() * 7;
+            const duration = Math.random() * 6 + 5;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            sparkle.style.cssText = `
+              width: ${size}px;
+              height: ${size}px;
+              left: ${Math.random() * 100}%;
+              --color: ${color};
+              --duration: ${duration}s;
+              animation-delay: -${delay}s;
+              box-shadow: 0 0 ${size * 2}px ${color};
+            `;
+            container.appendChild(sparkle);
+          }
+        });
+      }
+      createCardSparkles();
+
+      // ─── AUDIO PLAYBACK & MYSTICAL SYNTH FALLBACK ───
+      let synthAudioCtx = null;
+      let synthNodes = [];
+      let synthInterval = null;
+      let synthStartTime = 0;
+      let isSynthPlaying = false;
+      let synthDuration = 12; // 12 seconds simulated testimonial
+      let activeSynthIndex = null;
+      let activeNativeAudio = null;
+      let activeNativeCard = null;
+
+      function getAudioContext() {
+        if (!synthAudioCtx) {
+          synthAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (synthAudioCtx.state === 'suspended') {
+          synthAudioCtx.resume();
+        }
+        return synthAudioCtx;
+      }
+
+      function stopSynthPlayback() {
+        isSynthPlaying = false;
+        activeSynthIndex = null;
+        if (synthInterval) {
+          clearInterval(synthInterval);
+          synthInterval = null;
+        }
+        synthNodes.forEach(node => {
+          try {
+            node.disconnect();
+            node.stop();
+          } catch (e) {}
+        });
+        synthNodes = [];
+      }
+
+      function playMysticalSynth(index, onProgress, onEnded) {
+        const ctx = getAudioContext();
+        stopSynthPlayback();
+
+        isSynthPlaying = true;
+        activeSynthIndex = index;
+        synthStartTime = ctx.currentTime;
+
+        // Sequence of celestial harmonies simulating testimonial resonance
+        const scheduleNote = (timeOffset, freq, duration, vol) => {
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gainNode = ctx.createGain();
+
+          osc1.type = 'sine';
+          osc1.frequency.setValueAtTime(freq, ctx.currentTime + timeOffset);
+
+          osc2.type = 'sine';
+          osc2.frequency.setValueAtTime(freq * 1.5, ctx.currentTime + timeOffset); // soft quint overtone
+
+          // Attack, Decay, Sustain, Release envelope
+          gainNode.gain.setValueAtTime(0, ctx.currentTime + timeOffset);
+          gainNode.gain.linearRampToValueAtTime(vol, ctx.currentTime + timeOffset + 0.15);
+          gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + timeOffset + duration);
+
+          osc1.connect(gainNode);
+          osc2.connect(gainNode);
+          gainNode.connect(ctx.destination);
+
+          osc1.start(ctx.currentTime + timeOffset);
+          osc2.start(ctx.currentTime + timeOffset);
+          osc1.stop(ctx.currentTime + timeOffset + duration);
+          osc2.stop(ctx.currentTime + timeOffset + duration);
+
+          synthNodes.push(osc1, osc2, gainNode);
+        };
+
+        // Tibetan singing bowl chimes schedule
+        // Base note
+        scheduleNote(0.0, 220.00, 6.0, 0.22); // A3
+        scheduleNote(0.5, 440.00, 4.0, 0.10); // A4 (chime)
+        
+        // Peaceful transition
+        scheduleNote(2.8, 261.63, 5.0, 0.18); // C4
+        scheduleNote(3.3, 523.25, 3.2, 0.08); // C5
+        
+        // Uplifting third
+        scheduleNote(5.6, 329.63, 5.0, 0.18); // E4
+        scheduleNote(6.1, 659.25, 3.2, 0.08); // E5
+        
+        // Resolution A-minor chord
+        scheduleNote(8.4, 440.00, 4.0, 0.22); // A4
+        scheduleNote(8.9, 880.00, 2.5, 0.06); // A5
+
+        synthInterval = setInterval(() => {
+          const elapsed = ctx.currentTime - synthStartTime;
+          const progress = Math.min(elapsed / synthDuration, 1);
+          onProgress(progress, elapsed, synthDuration);
+
+          if (elapsed >= synthDuration) {
+            stopSynthPlayback();
+            onEnded();
+          }
+        }, 80);
+      }
+
+      function formatTime(seconds) {
+        if (isNaN(seconds) || seconds === Infinity) return "0:00";
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      }
+
+      function updatePlayerUI(card, progress, currentSecs, totalSecs) {
+        const fill = card.querySelector('.timeline-fill');
+        const currentTimeEl = card.querySelector('.current-time');
+        const durationTimeEl = card.querySelector('.duration-time');
+        const spinnerBar = card.querySelector('.spinner-bar');
+
+        // Update timeline progress
+        if (fill) fill.style.width = `${progress * 100}%`;
+
+        // Update text time
+        if (currentTimeEl) currentTimeEl.textContent = formatTime(currentSecs);
+        if (durationTimeEl) durationTimeEl.textContent = formatTime(totalSecs);
+
+        // Update spinner ring progress (stroke-dasharray=138, stroke-dashoffset=138 at 0%)
+        if (spinnerBar) {
+          const dashoffset = 138 - (progress * 138);
+          spinnerBar.style.strokeDashoffset = dashoffset;
+        }
+      }
+
+      function resetPlayerUI(card) {
+        const fill = card.querySelector('.timeline-fill');
+        const currentTimeEl = card.querySelector('.current-time');
+        const spinnerBar = card.querySelector('.spinner-bar');
+        const playBtn = card.querySelector('.audio-play-btn');
+
+        if (fill) fill.style.width = '0%';
+        if (currentTimeEl) currentTimeEl.textContent = '0:00';
+        if (spinnerBar) spinnerBar.style.strokeDashoffset = '138';
+
+        if (playBtn) {
+          playBtn.querySelector('.play-state').style.display = 'block';
+          playBtn.querySelector('.pause-state').style.display = 'none';
+        }
+      }
+
+      function pauseAllAudio() {
+        // Stop native audio
+        if (activeNativeAudio) {
+          activeNativeAudio.pause();
+          activeNativeAudio = null;
+        }
+        if (activeNativeCard) {
+          resetPlayerUI(activeNativeCard);
+          activeNativeCard = null;
+        }
+
+        // Stop synth fallback
+        if (isSynthPlaying) {
+          const playingCard = tarotCards[activeSynthIndex];
+          if (playingCard) resetPlayerUI(playingCard);
+          stopSynthPlayback();
+        }
+      }
+
+      // Setup audio controls for each card
+      tarotCards.forEach((card, index) => {
+        const audio = card.querySelector('audio');
+        const playBtn = card.querySelector('.audio-play-btn');
+        const slider = card.querySelector('.timeline-slider');
+        const playState = playBtn ? playBtn.querySelector('.play-state') : null;
+        const pauseState = playBtn ? playBtn.querySelector('.pause-state') : null;
+
+        if (!audio || !playBtn) return;
+
+        // Native metadata loaded
+        audio.addEventListener('loadedmetadata', () => {
+          const durationEl = card.querySelector('.duration-time');
+          if (durationEl) durationEl.textContent = formatTime(audio.duration);
+        });
+
+        // Native audio ended
+        audio.addEventListener('ended', () => {
+          resetPlayerUI(card);
+          activeNativeAudio = null;
+          activeNativeCard = null;
+        });
+
+        // Timeupdate for progress bar
+        audio.addEventListener('timeupdate', () => {
+          if (audio.duration) {
+            const progress = audio.currentTime / audio.duration;
+            updatePlayerUI(card, progress, audio.currentTime, audio.duration);
+          }
+        });
+
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent card selection logic
+
+          // If clicked play on a non-active card, first transition to it
+          if (!card.classList.contains('active')) {
+            activeCardIndex = index;
+            updateCarousel();
+            return;
+          }
+
+          // Case 1: Synth is playing on this card -> PAUSE
+          if (isSynthPlaying && activeSynthIndex === index) {
+            pauseAllAudio();
+            return;
+          }
+
+          // Case 2: Native audio is playing on this card -> PAUSE
+          if (activeNativeAudio === audio) {
+            pauseAllAudio();
+            return;
+          }
+
+          // Case 3: We are starting playback on this card
+          pauseAllAudio(); // Stop everything first
+
+          // Visual switch to playing
+          if (playState && pauseState) {
+            playState.style.display = 'none';
+            pauseState.style.display = 'block';
+          }
+
+          // Native Play Promise
+          let playPromise = audio.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              // Playing native file!
+              activeNativeAudio = audio;
+              activeNativeCard = card;
+            }).catch(error => {
+              console.log(`Testimonial file (${audio.getAttribute('src')}) not found or blocked. Launching mystical synth fallback...`);
+              
+              // Launch Tibetan Bowl sound generator fallback
+              playMysticalSynth(index, 
+                (progress, elapsed, duration) => {
+                  updatePlayerUI(card, progress, elapsed, duration);
+                },
+                () => {
+                  resetPlayerUI(card);
+                }
+              );
+            });
+          }
+        });
+
+        // Click-seeking on timeline slider
+        if (slider) {
+          slider.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!card.classList.contains('active')) return;
+
+            const rect = slider.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const percentage = Math.max(0, Math.min(1, clickX / rect.width));
+
+            if (activeNativeAudio === audio && audio.duration) {
+              audio.currentTime = percentage * audio.duration;
+              updatePlayerUI(card, percentage, audio.currentTime, audio.duration);
+            } else if (isSynthPlaying && activeSynthIndex === index) {
+              // Seek in Synth simulation: shift the start time
+              const elapsed = percentage * synthDuration;
+              synthStartTime = getAudioContext().currentTime - elapsed;
+              updatePlayerUI(card, percentage, elapsed, synthDuration);
+            }
+          });
+        }
+      });
     </script>
 
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -3290,7 +4410,7 @@
         <h3 class="ritual-modal-title" id="modalTitle"></h3>
         <div class="ritual-modal-desc" id="modalDesc"></div>
         <div class="ritual-modal-footer">
-          <a href="#contact" class="ritual-modal-btn" id="modalCta">
+          <a href="https://wa.me/524491142428?text=Hola%20Buda%20Studio,%0A%0AMe%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20rituales%20y%20servicios.%0A%0A%C2%BFPodr%C3%ADan%20orientarme%20y%20ayudarme%20a%20encontrar%20la%20mejor%20opci%C3%B3n%20para%20mi%20situaci%C3%B3n?%0A%0AGracias." class="ritual-modal-btn" id="modalCta" target="_blank">
             Agendar Ritual
           </a>
         </div>
